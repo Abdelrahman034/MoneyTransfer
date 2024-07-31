@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.transferservice.dto.TransactionDTO;
+import org.transferservice.dto.enums.TransactionStatus;
 import org.transferservice.model.Transaction;
 import org.transferservice.repository.TransactionRepository;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class TransactionService {
 
     public List<TransactionDTO> getTransactionHistory(Long accountId, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Transaction> transactionsPage = transactionRepository.findByid(accountId,pageable);
+        Page<Transaction> transactionsPage = transactionRepository.findBySenderAccountIdOrRecipientAccountId(accountId,accountId,pageable);
 
         List<Transaction> transactions = transactionsPage.getContent();
 
@@ -33,13 +34,24 @@ public class TransactionService {
 
     public List<TransactionDTO> getTransactionHistoryWithFilters(Long accountId, LocalDateTime startDate, LocalDateTime endDate, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Transaction> transactionsPage = transactionRepository.findByidAndTransactionTimeBetween(accountId,startDate, endDate, pageable);
+        Page<Transaction> transactionsPage = transactionRepository.findBySenderAccountIdOrRecipientAccountIdAndTransactionTimeBetween(accountId,startDate, endDate, pageable);
 
         List<Transaction> transactions = transactionsPage.getContent();
 
         List<TransactionDTO> res = new ArrayList<>();
         transactions.forEach(transaction -> res.add(transaction.toDTO()));
         return res;
+    }
+
+    public Transaction addTransaction(Long senderAccountId, Long recipientAccountId, TransactionStatus status, Double ammount){
+        Transaction transaction  = Transaction
+                .builder()
+                .senderAccountId(senderAccountId)
+                .recipientAccountId(recipientAccountId)
+                .status(status)
+                .amount(ammount)
+                .build();
+        return this.transactionRepository.save(transaction);
     }
 
 }

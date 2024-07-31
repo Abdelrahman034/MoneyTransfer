@@ -1,14 +1,16 @@
 package org.transferservice.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
+import org.transferservice.dto.CustomerDTO;
 import org.transferservice.dto.TransactionDTO;
 import org.transferservice.exception.custom.CustomerNotFoundException;
 import org.transferservice.model.Customer;
 import org.transferservice.repository.CustomerRepository;
+import org.transferservice.service.CustomerService;
 import org.transferservice.service.TransactionService;
 import org.transferservice.service.security.JwtUtils;
 
@@ -21,12 +23,12 @@ import static org.transferservice.service.security.JwtUtils.extractToken;
 
 @RestController
 @RequestMapping("/api/transactions")
-@RequiredArgsConstructor
+
+@AllArgsConstructor
 public class TransactionController {
-
     private final TransactionService transactionService;
-    private final CustomerRepository customerRepository;
-
+    private final CustomerService customerService;
+    private final JwtUtils Jwt;
     @GetMapping
     public List<TransactionDTO> getTransactionHistory(
             @RequestHeader("Authorization") String authorizationHeader,
@@ -36,17 +38,13 @@ public class TransactionController {
         if(token == null) {
             throw new CustomerNotFoundException("UnAuthorized");
         }
-
-        JwtUtils jwtUtils = new JwtUtils();
-        String customerEmail = jwtUtils.getUserNameFromJwtToken(token);
-        Customer customer = this.customerRepository.findUserByEmail(customerEmail)
-                .orElseThrow(() -> new CustomerNotFoundException(String.format("Customer with email %s not found", customerEmail)));
-
+        String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
+        CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
         return transactionService.getTransactionHistory(customer.getId(),page, size);
     }
 
     @GetMapping("/filtered")
-    public ResponseEntity<List<TransactionDTO>> getTransactionHistoryWithFilters(
+    public List<TransactionDTO> getTransactionHistoryWithFilters(
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam LocalDateTime startDate,
             @RequestParam LocalDateTime endDate,
@@ -57,12 +55,9 @@ public class TransactionController {
             throw new CustomerNotFoundException("UnAuthorized");
         }
 
-        JwtUtils jwtUtils = new JwtUtils();
-        String customerEmail = jwtUtils.getUserNameFromJwtToken(token);
-        Customer customer = this.customerRepository.findUserByEmail(customerEmail)
-                .orElseThrow(() -> new CustomerNotFoundException(String.format("Customer with email %s not found", customerEmail)));
-        List<TransactionDTO> transactions = transactionService.getTransactionHistoryWithFilters(customer.getId(), startDate,endDate, page, size);
-        return ResponseEntity.ok(transactions);
+        String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
+        CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
+        return transactionService.getTransactionHistoryWithFilters(customer.getId(), startDate,endDate, page, size);
     }
 
 }

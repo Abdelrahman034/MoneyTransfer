@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.transferservice.dto.TransactionDTO;
 import org.transferservice.dto.enums.TransactionStatus;
 
@@ -31,9 +32,11 @@ public class Transaction {
     private Double amount;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime transactionTime;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
     public TransactionDTO toDTO() {

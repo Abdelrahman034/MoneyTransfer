@@ -59,7 +59,7 @@ public class AuthenticatorService implements IAuthenticator {
                 .accountDescription("Savings Account")
                 .active(true)
                 .currency(AccountCurrency.EGP)
-                .balance(0.0)
+                .balance(1000.0)
                 .build();
 
 
