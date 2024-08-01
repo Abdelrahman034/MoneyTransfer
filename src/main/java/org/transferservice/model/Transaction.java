@@ -23,10 +23,10 @@ public class Transaction {
     private Long id;
 
     @Column(nullable = false)
-    private Long senderAccountId;
+    private String senderAccountNumber;
 
     @Column(nullable = false)
-    private Long recipientAccountId;
+    private String recipientAccountNumber;
 
     @Column(nullable = false)
     private Double amount;
@@ -42,8 +42,8 @@ public class Transaction {
     public TransactionDTO toDTO() {
         return TransactionDTO.builder()
                 .id(this.getId())
-                .senderAccountId(this.getSenderAccountId())
-                .recipientAccountId(this.getRecipientAccountId())
+                .senderAccountNumber(this.getSenderAccountNumber())
+                .recipientAccountNumber(this.getRecipientAccountNumber())
                 .amount(this.getAmount())
                 .transactionTime(this.getTransactionTime())
                 .status(this.getStatus())

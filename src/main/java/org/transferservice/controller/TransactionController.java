@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.transferservice.dto.CustomerDTO;
 import org.transferservice.dto.TransactionDTO;
@@ -23,7 +24,7 @@ import static org.transferservice.service.security.JwtUtils.extractToken;
 
 @RestController
 @RequestMapping("/api/transactions")
-
+@Component
 @AllArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;
@@ -40,7 +41,7 @@ public class TransactionController {
         }
         String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
         CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
-        return transactionService.getTransactionHistory(customer.getId(),page, size);
+        return transactionService.getTransactionHistory(customer.getAccount().getAccountNumber(),page, size);
     }
 
     @GetMapping("/filtered")
@@ -57,7 +58,7 @@ public class TransactionController {
 
         String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
         CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
-        return transactionService.getTransactionHistoryWithFilters(customer.getId(), startDate,endDate, page, size);
+        return transactionService.getTransactionHistoryWithFilters(customer.getAccount().getAccountNumber(), startDate,endDate, page, size);
     }
 
 }

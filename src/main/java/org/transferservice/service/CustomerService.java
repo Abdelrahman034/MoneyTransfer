@@ -1,5 +1,6 @@
 package org.transferservice.service;
 
+import jakarta.servlet.http.PushBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -16,6 +17,7 @@ import org.transferservice.model.Customer;
 import org.transferservice.repository.AccountRepository;
 import org.transferservice.repository.CustomerRepository;
 
+import java.lang.constant.DynamicCallSiteDesc;
 import java.util.AbstractCollection;
 import java.util.Optional;
 
@@ -75,22 +77,13 @@ public class CustomerService implements ICustomer {
        return customer.toDTO();
     }
 
-    public TransactionStatus isValidTransaction(AccountDTO senderAccount, AccountDTO recipientAccount, Double amount) throws Exception{
-        if(senderAccount.getBalance()<amount || amount<0){
-            return TransactionStatus.FAILED;
-        }
-        Account fromAccount = this.accountRepository.findById(senderAccount.getId())
-                .orElseThrow(()-> new CustomerNotFoundException("Customer does not have an account"));
+    @Override
+    public CustomerDTO getCustomerByAccountNumber(String accountNumber) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new CustomerNotFoundException("Account number not found"));
+        return customer.toDTO();
 
-        Account toAccount = this.accountRepository.findById(recipientAccount.getId())
-                .orElseThrow(() -> new CustomerNotFoundException("Customer does not have an account"));
-
-        fromAccount.setBalance(fromAccount.getBalance()-amount);
-        toAccount.setBalance(toAccount.getBalance()+amount);
-
-        this.accountRepository.save(fromAccount);
-        this.accountRepository.save(toAccount);
-        return TransactionStatus.SUCCESS;
     }
+
 
 }

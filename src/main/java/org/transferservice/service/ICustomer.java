@@ -36,4 +36,7 @@ public interface ICustomer {
      */
     CustomerDTO getCustomerById(Long id) throws CustomerNotFoundException;
 
+
+    CustomerDTO getCustomerByAccountNumber(String accountNumber) throws CustomerNotFoundException;
+
 }

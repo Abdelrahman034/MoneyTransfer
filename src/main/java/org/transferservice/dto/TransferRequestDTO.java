@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TransferRequestDTO {
-    private Long recipientId;
+    private String recipientAccountNumber;
     private Double amount;
 }

@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class TransactionDTO {
 
     private Long id;
-    private Long senderAccountId;
-    private Long recipientAccountId;
+    private String senderAccountNumber;
+    private String recipientAccountNumber;
     private double amount;
     private LocalDateTime transactionTime;
     private TransactionStatus status;
