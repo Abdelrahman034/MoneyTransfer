@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransferRequestDTO {
+public class FavoriteRecipientRequestDTO {
     private String recipientAccountNumber;
-    private Double amount;
 }

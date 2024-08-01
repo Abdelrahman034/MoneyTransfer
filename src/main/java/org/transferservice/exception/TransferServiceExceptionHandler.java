@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.transferservice.exception.custom.AccountNotFoundException;
 import org.transferservice.exception.custom.CustomerAlreadyExistException;
 import org.transferservice.exception.custom.CustomerNotFoundException;
 import org.transferservice.exception.response.ErrorDetails;
@@ -33,6 +34,12 @@ public class TransferServiceExceptionHandler {
                 request.getDescription(false), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Object> accountrNotFoundExceptionHandling(CustomerNotFoundException exception, WebRequest request) {
+        return new ResponseEntity<>(new ErrorDetails(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(false), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> methodArgumentNotValidExceptionHandling(MethodArgumentNotValidException exception) {
 

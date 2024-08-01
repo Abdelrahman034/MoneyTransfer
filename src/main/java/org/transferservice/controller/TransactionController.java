@@ -17,10 +17,7 @@ import org.transferservice.service.security.JwtUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-
-import static org.transferservice.service.security.JwtUtils.extractToken;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -35,11 +32,10 @@ public class TransactionController {
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam Integer page,
             @RequestParam Integer size) throws CustomerNotFoundException {
-        String token = extractToken(authorizationHeader);
-        if(token == null) {
+        if((authorizationHeader) == null) {
             throw new CustomerNotFoundException("UnAuthorized");
         }
-        String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
+        String customerEmail = this.Jwt.getUserNameFromJwtToken((authorizationHeader));
         CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
         return transactionService.getTransactionHistory(customer.getAccount().getAccountNumber(),page, size);
     }
@@ -51,12 +47,14 @@ public class TransactionController {
             @RequestParam LocalDateTime endDate,
             @RequestParam Integer page,
             @RequestParam Integer size) throws CustomerNotFoundException{
-        String token = extractToken(authorizationHeader);
-        if(token == null) {
+
+        authorizationHeader = authorizationHeader.substring(7);
+
+        if((authorizationHeader) == null) {
             throw new CustomerNotFoundException("UnAuthorized");
         }
 
-        String customerEmail = this.Jwt.getUserNameFromJwtToken(token);
+        String customerEmail = this.Jwt.getUserNameFromJwtToken((authorizationHeader));
         CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
         return transactionService.getTransactionHistoryWithFilters(customer.getAccount().getAccountNumber(), startDate,endDate, page, size);
     }

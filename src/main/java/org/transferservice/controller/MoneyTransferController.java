@@ -19,8 +19,6 @@ import org.transferservice.service.security.JwtUtils;
 
 import java.util.Objects;
 
-import static org.transferservice.service.security.JwtUtils.extractToken;
-
 @Data
 @Component
 @RestController
@@ -37,13 +35,13 @@ public class MoneyTransferController {
             @RequestHeader("Authorization") String authorizationHeader,
             @RequestBody TransferRequestDTO transferRequest ) throws Exception{
 
+        authorizationHeader = authorizationHeader.substring(7);
         String recipientAccountNumber = transferRequest.getRecipientAccountNumber();
         Double amount = transferRequest.getAmount();
-        String token = extractToken(authorizationHeader);
-        if(token == null) {
+        if((authorizationHeader) == null) {
             throw new CustomerNotFoundException("UnAuthorized");
         }
-        String customerEmail = this.jwt.getUserNameFromJwtToken(token);
+        String customerEmail = this.jwt.getUserNameFromJwtToken((authorizationHeader));
         CustomerDTO customer = this.customerService.checkCustomerEmail(customerEmail);
         CustomerDTO recipientCustomer = this.customerService.getCustomerByAccountNumber(recipientAccountNumber);
         TransactionStatus isValid = this.transactionService.isValidTransaction(customer,recipientCustomer,amount);
