@@ -1,6 +1,7 @@
 package org.transferservice.dto;
 
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class AccountDTO {
     private AccountType accountType;
 
     private Double balance;
+
+    private final String cardType = "Mastercard";
 
     private AccountCurrency currency;
 

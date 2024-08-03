@@ -34,6 +34,9 @@ public class Account {
     private Double balance;
 
     @Column(nullable = false)
+    private final String cardType = "Mastercard";
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AccountCurrency currency;
 
@@ -61,7 +64,6 @@ public class Account {
                 .accountNumber(this.accountNumber)
                 .accountType(this.accountType)
                 .balance(this.balance)
-                .currency(this.currency)
                 .accountName(this.accountName)
                 .accountDescription(this.accountDescription)
                 .active(this.active)
