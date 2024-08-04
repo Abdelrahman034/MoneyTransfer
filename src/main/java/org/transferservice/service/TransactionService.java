@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import org.transferservice.dto.AccountDTO;
@@ -33,7 +34,7 @@ public class TransactionService {
     private final CustomerService customerService;
 
     public List<TransactionDTO> getTransactionHistory(String  accountId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "transactionTime"));
         Page<Transaction> transactionsPage = transactionRepository.findBySenderAccountNumberOrRecipientAccountNumber(accountId,accountId,pageable);
         List<Transaction> transactions = transactionsPage.getContent();
         List<TransactionDTO> res = new ArrayList<>();
