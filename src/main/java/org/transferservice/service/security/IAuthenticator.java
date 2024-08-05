@@ -1,9 +1,7 @@
 package org.transferservice.service.security;
 
-import org.transferservice.dto.CreateCustomerDTO;
-import org.transferservice.dto.CustomerDTO;
-import org.transferservice.dto.LoginRequestDTO;
-import org.transferservice.dto.LoginResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.transferservice.dto.*;
 import org.transferservice.exception.custom.CustomerAlreadyExistException;
 
 public interface IAuthenticator {
@@ -15,7 +13,7 @@ public interface IAuthenticator {
      * @return registered customer @{@link CustomerDTO}
      * @throws CustomerAlreadyExistException if customer already exist
      */
-    CustomerDTO register(CreateCustomerDTO createCustomerDTO) throws CustomerAlreadyExistException;
+    String register(CreateCustomerDTO createCustomerDTO) throws CustomerAlreadyExistException;
 
     /**
      * Login a customer
@@ -24,4 +22,5 @@ public interface IAuthenticator {
      * @return login response @{@link LoginResponseDTO}
      */
     LoginResponseDTO login(LoginRequestDTO loginRequestDTO);
+    LogoutResponseDTO logout(HttpServletRequest httpServletRequest);
 }

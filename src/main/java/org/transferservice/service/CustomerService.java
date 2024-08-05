@@ -30,32 +30,32 @@ public class CustomerService implements ICustomer {
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
 
-    @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Customer updateCustomer(Long id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
+//    @Override
+//    @Transactional(isolation = Isolation.SERIALIZABLE)
+//    public Customer updateCustomer(Long id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
+//
+//        Customer customer = this.getCustomerByCustomerId(id);
+//
+//        customer.setFirstName(updateCustomerDTO.getFirstName());
+//        customer.setLastName(updateCustomerDTO.getLastName());
+//        customer.setEmail(updateCustomerDTO.getEmail());
+//        customer.setPhoneNumber(updateCustomerDTO.getPhoneNumber());
+//        customer.setAddress(updateCustomerDTO.getAddress());
+//        customer.setNationality(updateCustomerDTO.getNationality());
+//        customer.setNationalIdNumber(updateCustomerDTO.getNationalIdNumber());
+//        customer.setDateOfBirth(updateCustomerDTO.getDateOfBirth());
+//
+//        return this.customerRepository.save(customer);
+//
+//    }
 
-        Customer customer = this.getCustomerByCustomerId(id);
-
-        customer.setFirstName(updateCustomerDTO.getFirstName());
-        customer.setLastName(updateCustomerDTO.getLastName());
-        customer.setEmail(updateCustomerDTO.getEmail());
-        customer.setPhoneNumber(updateCustomerDTO.getPhoneNumber());
-        customer.setAddress(updateCustomerDTO.getAddress());
-        customer.setNationality(updateCustomerDTO.getNationality());
-        customer.setNationalIdNumber(updateCustomerDTO.getNationalIdNumber());
-        customer.setDateOfBirth(updateCustomerDTO.getDateOfBirth());
-
-        return this.customerRepository.save(customer);
-
-    }
-
-    @Override
-    public void deleteCustomer(Long id) throws CustomerNotFoundException {
-
-        Customer customer = this.getCustomerByCustomerId(id);
-
-        this.customerRepository.delete(customer);
-    }
+//    @Override
+//    public void deleteCustomer(Long id) throws CustomerNotFoundException {
+//
+//        Customer customer = this.getCustomerByCustomerId(id);
+//
+//        this.customerRepository.delete(customer);
+//    }
 
     @Override
     public CustomerDTO getCustomerById(Long id) throws CustomerNotFoundException {

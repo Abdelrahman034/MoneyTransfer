@@ -33,21 +33,21 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
-    @Operation(summary = "Delete Customer by ID")
-    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json")})
-    @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ErrorDetails.class), mediaType = "application/json")})
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
-        customerService.deleteCustomer(id);
-    }
-
-    @Operation(summary = "Update Customer by ID")
-    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json")})
-    @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ErrorDetails.class), mediaType = "application/json")})
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id,
-                                   @RequestBody UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
-        return customerService.updateCustomer(id, updateCustomerDTO);
-    }
+//    @Operation(summary = "Delete Customer by ID")
+//    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json")})
+//    @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ErrorDetails.class), mediaType = "application/json")})
+//    @DeleteMapping("/{id}")
+//    public void deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
+//        customerService.deleteCustomer(id);
+//    }
+//
+//    @Operation(summary = "Update Customer by ID")
+//    @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = CustomerDTO.class), mediaType = "application/json")})
+//    @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema(implementation = ErrorDetails.class), mediaType = "application/json")})
+//    @PutMapping("/{id}")
+//    public Customer updateCustomer(@PathVariable Long id,
+//                                   @RequestBody UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException {
+//        return customerService.updateCustomer(id, updateCustomerDTO);
+//    }
 
 }

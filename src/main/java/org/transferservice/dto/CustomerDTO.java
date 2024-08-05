@@ -1,6 +1,7 @@
 package org.transferservice.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,24 +19,25 @@ public class CustomerDTO {
 
     private Long id;
 
-    private String firstName;
-
-    private String lastName;
+    private String userName;
 
     private String email;
 
-    private String phoneNumber;
-
-    private String address;
-
-    private String nationality;
-
-    private String nationalIdNumber;
-
-    private Gender gender;
+    private String country;
 
     private LocalDate dateOfBirth;
 
     private AccountDTO account;
+//    private String phoneNumber;
+//
+//    private String address;
+//
+//    private String nationality;
+//
+//    private String nationalIdNumber;
+//
+//    private Gender gender;
+//
+
 
 }

@@ -8,24 +8,24 @@ import org.transferservice.model.Customer;
 
 public interface ICustomer {
 
-    /**
-     * Update customer details
-     *
-     * @param id                customer id
-     * @param updateCustomerDTO customer details
-     * @return updated customer @{@link Customer}
-     * @throws CustomerNotFoundException if customer not found
-     */
-    Customer updateCustomer(Long id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException;
+//    /**
+//     * Update customer details
+//     *
+//     * @param id                customer id
+//     * @param updateCustomerDTO customer details
+//     * @return updated customer @{@link Customer}
+//     * @throws CustomerNotFoundException if customer not found
+//     */
+    //Customer updateCustomer(Long id, UpdateCustomerDTO updateCustomerDTO) throws CustomerNotFoundException;
 
 
-    /**
-     * Delete customer
-     *
-     * @param id customer id
-     * @throws CustomerNotFoundException if customer not found
-     */
-    void deleteCustomer(Long id) throws CustomerNotFoundException;
+//    /**
+//     * Delete customer
+//     *
+//     * @param id customer id
+//     * @throws CustomerNotFoundException if customer not found
+//     */
+   //void deleteCustomer(Long id) throws CustomerNotFoundException;
 
     /**
      * Get customer by id

@@ -1,6 +1,5 @@
 package org.transferservice.config;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,23 +22,28 @@ import org.transferservice.service.security.CustomerDetailsServiceImpl;
 public class WebSecurityConfig {
 
     private final CustomerDetailsServiceImpl userDetailsService;
-
     private final AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(e -> e.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**",
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .sessionFixation().none()
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired")
+                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**",
                                 "/h2-console/**",
                                 "/actuator/**",
                                 "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
-                        .anyRequest().authenticated());
-
-        http.authenticationProvider(authenticationProvider());
-
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

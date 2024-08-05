@@ -1,6 +1,7 @@
 package org.transferservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,28 +27,14 @@ public class Customer {
     private Long id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String userName;
 
-    @Column(nullable = false)
-    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
-
     @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
-    private String nationality;
-
-    @Column(nullable = false, unique = true)
-    private String nationalIdNumber;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String country;
 
     @Column(nullable = false)
     private LocalDate dateOfBirth;
@@ -55,24 +42,43 @@ public class Customer {
     @Column(nullable = false)
     private String password;
 
+
     @CreationTimestamp
-    private LocalDateTime creationTimeStamp;
+    private LocalDate creationTimeStamp;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Account account;
 
+//    @Column(nullable = false, unique = true)
+//    private String phoneNumber;
+//
+//    @Column(nullable = false)
+//    private String address;
+//
+//
+//
+//    @Column(nullable = false, unique = true)
+//    private String nationalIdNumber;
+//
+//    @Enumerated(EnumType.STRING)
+//    private Gender gender;
+//
+
+
+
+
     public CustomerDTO toDTO() {
         return CustomerDTO.builder()
                 .id(this.id)
-                .firstName(this.firstName)
-                .lastName(this.lastName)
+                .userName(this.userName)
+                .country(this.country)
                 .email(this.email)
-                .phoneNumber(this.phoneNumber)
-                .address(this.address)
-                .gender(this.gender)
-                .nationality(this.nationality)
-                .nationalIdNumber(this.nationalIdNumber)
                 .dateOfBirth(this.dateOfBirth)
+                // .phoneNumber(this.phoneNumber)
+//                .address(this.address)
+//                .gender(this.gender)
+//                .nationality(this.nationality)
+//                .nationalIdNumber(this.nationalIdNumber)
                 .account(this.account.toDTO())
                 .build();
     }

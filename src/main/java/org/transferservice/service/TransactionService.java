@@ -58,9 +58,9 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setCurrency(currency);
         transaction.setRecipientAccountNumber(recipientAccountNumber);
-        transaction.setRecipientName(recipientCustomer.getFirstName() + " " + recipientCustomer.getLastName());
+        transaction.setRecipientName(recipientCustomer.getUserName());
         transaction.setSenderAccountNumber(customer.getAccount().getAccountNumber());
-        transaction.setSenderName(customer.getFirstName() + " " + customer.getLastName());
+        transaction.setSenderName(customer.getUserName());
         transaction.setStatus(status);
         transaction.setTransactionTime(LocalDateTime.now());
 
