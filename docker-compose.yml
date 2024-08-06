@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev  # Or any profile you use for H2 configuration
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb  # H2 in-memory database URL
+      SPRING_DATASOURCE_USERNAME: sa  # H2 default username
+      SPRING_DATASOURCE_PASSWORD:  # H2 default password is empty
+    # No db service dependency needed
+
+  # Removed db service
+  # Removed volumes section
+
+# Removed volumes section
