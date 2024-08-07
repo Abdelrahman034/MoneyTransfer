@@ -18,6 +18,7 @@ import org.transferservice.service.ICustomer;
 
 @RestController
 @RequestMapping("/api/customer")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "Customer Controller", description = "Customer controller")

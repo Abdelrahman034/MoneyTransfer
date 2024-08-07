@@ -22,6 +22,7 @@ import org.transferservice.service.security.IAuthenticator;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Validated
 @Tag(name = "Customer Auth Controller", description = "Customer Auth controller")
 public class AuthController {

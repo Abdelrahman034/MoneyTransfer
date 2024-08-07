@@ -20,6 +20,7 @@
 
     @RestController
     @RequestMapping("/api/transactions")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @Component
     @AllArgsConstructor
     public class TransactionController {

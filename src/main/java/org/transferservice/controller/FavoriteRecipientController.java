@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/favorites")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FavoriteRecipientController {
 
     private final CustomerService customerService;

@@ -20,6 +20,7 @@ import org.transferservice.service.security.JwtUtils;
 @Component
 @RestController
 @RequestMapping("/api/transfer")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class MoneyTransferController {
 
